@@ -1,0 +1,32 @@
+% Facts about parent relationships
+parent(john, mary).
+parent(john, tom).
+parent(mary, ann).
+parent(mary, pat).
+parent(pat, jim).
+
+% Rule: If two individuals have a common parent, they are siblings
+sibling(X, Y) :-
+    parent(Z, X),
+    parent(Z, Y),
+    X \== Y.
+
+% Rule: If X is a parent of Y, then Y is a child of X
+child(X, Y) :-
+    parent(X, Y).
+
+% Rule: If X is a parent of Y, then Y is an ancestor of Z
+ancestor(X, Z) :-
+    parent(X, Z).
+ancestor(X, Z) :-
+    parent(X, Y),
+    ancestor(Y, Z).
+
+% Backward chaining rule to answer queries
+query_siblings(X, Y) :-
+    sibling(X, Y),
+    write(X), write(' and '), write(Y), write(' are siblings.'), nl.
+
+query_descendant(Person, Ancestor) :-
+    ancestor(Ancestor, Person),
+    write(Person), write(' is a descendant of '), write(Ancestor), write('.'), nl.
