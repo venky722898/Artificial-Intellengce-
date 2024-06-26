@@ -1,0 +1,24 @@
+% Facts about foods and their properties
+food_properties(apple, low_calorie).
+food_properties(banana, moderate_calorie).
+food_properties(carrot, low_calorie).
+food_properties(spinach, low_calorie).
+food_properties(chicken_breast, high_protein).
+food_properties(salmon, high_protein).
+food_properties(oats, high_fiber).
+food_properties(yogurt, probiotics).
+
+% Rules to determine suitable diets for different diseases
+suitable_diet(heart_disease, [apple, salmon, spinach]).
+suitable_diet(diabetes, [apple, chicken_breast, spinach]).
+suitable_diet(ibs, [banana, carrot, oats, yogurt]).
+
+% Predicate to check if a food is suitable for a disease
+suitable_food(Food, Disease) :-
+    suitable_diet(Disease, Diet),
+    member(Food, Diet).
+
+% Predicate to suggest a diet based on a disease
+suggest_diet(Disease) :-
+    suitable_diet(Disease, Diet),
+    write("Recommended diet for "), write(Disease), write(": "), write(Diet), nl.
